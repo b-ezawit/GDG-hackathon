@@ -180,6 +180,53 @@ function parseJsonContent(content: string): unknown {
   }
 }
 
+function isGroqQuotaOrServerError(e: unknown): boolean {
+  return e instanceof APIError && (e.status === 429 || e.status === 500);
+}
+
+/** Keeps radar + survival meter populated when Groq returns 429 / 500 during a demo. */
+function buildGroqApiFailureMock(mode: GapMode, targetText: string, currentText: string): GapAnalysisPayload {
+  const base = buildFallback(mode, targetText, currentText);
+  const topics = [...base.topics];
+  const padNames =
+    mode === "student"
+      ? ["Exam technique", "Core readings", "Problem practice", "Time management", "Concept synthesis"]
+      : ["Role fit narrative", "Stack depth", "System design", "Metrics & impact", "Behavioral crispness"];
+  let i = 0;
+  while (topics.length < 6) {
+    const name = padNames[i % padNames.length] ?? `Focus area ${i + 1}`;
+    topics.push({
+      id: `demo-pad-${i}`,
+      name,
+      importance: 78 - i * 6,
+      coverage: 28 + i * 4,
+      gap: 50,
+      notes: "Synthetic row so charts stay stable when the live model is rate-limited.",
+    });
+    i += 1;
+  }
+  const merged: GapAnalysisPayload = {
+    ...base,
+    survivalScore: Math.min(85, Math.max(35, base.survivalScore)),
+    headline: "Groq temporarily unavailable (quota or server) — demo snapshot loaded.",
+    summary:
+      "The live Groq request returned HTTP 429 or 500. This snapshot keeps your survival score and radar populated for the demo; retry shortly or check API quotas.",
+    topics: topics.slice(0, 12),
+    strengths: base.strengths.length ? base.strengths : ["Structured demo data keeps the dashboard usable."],
+    weaknesses: base.weaknesses.length
+      ? base.weaknesses
+      : ["Live gap topics could not be refreshed — results are approximate."],
+    bridges: [
+      "Retry gap analysis in a minute once quota resets.",
+      "Shorten pasted JD/resume excerpts to reduce token load.",
+      "Verify GROQ_API_KEY and rate limits on the Groq console.",
+      ...base.bridges.slice(0, 2),
+    ],
+    radar: base.radar?.length ? base.radar : undefined,
+  };
+  return merged;
+}
+
 export async function runGapAnalysis(
   mode: GapMode,
   targetText: string,
@@ -187,11 +234,12 @@ export async function runGapAnalysis(
 ): Promise<GapAnalysisResult> {
   const target = truncate(targetText.trim(), MAX_INPUT_CHARS);
   const current = truncate(currentText.trim(), MAX_INPUT_CHARS);
+  const modelName = defaultGapModel();
 
   const llm = getServerLlmOrNull();
   if (!llm) {
     const fb = buildFallback(mode, target, current);
-    return { ...normalizePayload(mode, fb), model: "heuristic-fallback", usedFallback: true };
+    return { ...normalizePayload(mode, fb), model: modelName, usedFallback: true };
   }
 
   const { client, gapModel } = llm;
@@ -208,8 +256,7 @@ export async function runGapAnalysis(
     ],
   });
 
-  const content = completion.choices[0]?.message?.content;
-  if (!content) throw new Error("Empty model response.");
+  if (!content?.trim()) throw new Error("Empty model response.");
 
   const parsed = parseJsonContent(content);
   const payload = gapAnalysisPayloadSchema.parse(parsed);
