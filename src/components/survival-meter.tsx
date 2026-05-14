@@ -1,6 +1,7 @@
 "use client";
 
 import { motion, useSpring, useTransform } from "framer-motion";
+import { Flame } from "lucide-react";
 import { useEffect } from "react";
 
 type Props = {
@@ -59,7 +60,10 @@ export function SurvivalMeter({ score, className }: Props) {
           </motion.div>
         </div>
         <div className="mt-2 flex justify-between px-0.5 font-mono text-[10px] uppercase tracking-widest text-slate-500 dark:text-zinc-600">
-          <span className="text-rose-600 dark:text-rose-400/80">Cooked</span>
+          <span className="inline-flex items-center gap-1 font-semibold text-[#7f1d1d] dark:text-rose-300">
+            Cooked
+            <Flame className="h-3.5 w-3.5 shrink-0 text-[#991b1b] dark:text-orange-400" strokeWidth={2} aria-hidden />
+          </span>
           <span className="text-emerald-600 dark:text-emerald-400/80">Surviving</span>
         </div>
       </div>
