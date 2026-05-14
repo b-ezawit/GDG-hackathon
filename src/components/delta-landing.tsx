@@ -4,9 +4,11 @@ import dynamic from "next/dynamic";
 import { motion } from "framer-motion";
 import Link from "next/link";
 import { useRef, useState } from "react";
+import { BookOpen, LayoutDashboard, Sparkles } from "lucide-react";
 
 import { DeltaIntroSequence } from "@/components/delta-intro-sequence";
-import { DeltaLogo } from "@/components/delta-logo";
+import { AmICookedLogo } from "@/components/amicooked-logo";
+import { ThemeToggle } from "@/components/app-theme";
 
 const GlitterField = dynamic(() => import("@/components/glitter-field").then((m) => m.GlitterField), {
   ssr: false,
@@ -25,40 +27,53 @@ export function DeltaLanding() {
   };
 
   return (
-    <div className="relative isolate min-h-screen overflow-hidden">
-      <GlitterField />
+    <div className="relative isolate min-h-screen overflow-hidden bg-slate-50 text-slate-900 dark:bg-[#06050a] dark:text-zinc-100">
+      <div className="hidden dark:block">
+        <GlitterField />
+      </div>
 
       <div
-        className="pointer-events-none absolute -left-32 top-0 h-[420px] w-[420px] rounded-full bg-cyan-500/15 blur-[120px] ds-aurora"
+        className="pointer-events-none absolute -left-32 top-0 h-[420px] w-[420px] rounded-full bg-violet-400/20 blur-[120px] dark:bg-cyan-500/15 ds-aurora"
         aria-hidden
       />
       <div
-        className="pointer-events-none absolute -right-24 top-48 h-[380px] w-[380px] rounded-full bg-violet-600/20 blur-[110px] ds-aurora"
+        className="pointer-events-none absolute -right-24 top-48 h-[380px] w-[380px] rounded-full bg-indigo-400/25 blur-[110px] dark:bg-violet-600/20 ds-aurora"
         style={{ animationDelay: "-8s" }}
         aria-hidden
       />
       <div
-        className="pointer-events-none absolute bottom-0 left-1/2 h-[320px] w-[640px] -translate-x-1/2 rounded-full bg-amber-900/10 blur-[100px]"
+        className="pointer-events-none absolute bottom-0 left-1/2 h-[320px] w-[640px] -translate-x-1/2 rounded-full bg-amber-200/30 blur-[100px] dark:bg-amber-900/10"
         aria-hidden
       />
-      <div className="ds-grid-bg pointer-events-none absolute inset-0 opacity-[0.28]" aria-hidden />
+      <div className="ds-grid-bg pointer-events-none absolute inset-0 opacity-60 dark:opacity-[0.28]" aria-hidden />
       <div
-        className="pointer-events-none absolute inset-0 opacity-[0.12] mix-blend-screen bg-[radial-gradient(ellipse_at_50%_0%,rgba(255,255,255,0.16),transparent_55%)]"
+        className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_50%_0%,rgba(124,58,237,0.08),transparent_55%)] opacity-100 dark:opacity-[0.12] dark:mix-blend-screen dark:bg-[radial-gradient(ellipse_at_50%_0%,rgba(255,255,255,0.16),transparent_55%)]"
         aria-hidden
       />
 
-      <header className="fixed left-0 right-0 top-0 z-40 flex items-center justify-between gap-4 px-4 py-3 sm:px-8">
-        <Link
-          ref={logoAnchorRef}
-          href="/"
-          className="group flex items-center gap-3 rounded-2xl border border-white/[0.08] bg-black/35 px-2 py-1.5 pr-4 shadow-[0_0_0_1px_rgba(255,255,255,0.03)_inset] backdrop-blur-xl transition hover:border-cyan-400/25"
-        >
-          <DeltaLogo nestEagle={nestEagle} />
-          <span className="font-[family-name:var(--font-space-grotesk)] text-lg font-semibold tracking-tight text-white">
-            Delta
-          </span>
-        </Link>
-        <span className="hidden font-mono text-[10px] text-zinc-600 sm:block">3D field · glass · motion</span>
+      <header className="fixed left-0 right-0 top-0 z-40 border-b border-slate-200/80 bg-white/80 px-4 py-3 shadow-sm backdrop-blur-xl dark:border-white/[0.06] dark:bg-black/45 dark:shadow-none sm:px-8">
+        <div className="mx-auto flex max-w-5xl items-center justify-between gap-4">
+          <Link
+            ref={logoAnchorRef}
+            href="/"
+            className="group flex items-center gap-3 rounded-2xl border border-slate-200/90 bg-white/90 px-2 py-1.5 pr-4 shadow-sm transition hover:border-violet-300 dark:border-white/[0.08] dark:bg-black/35 dark:shadow-[0_0_0_1px_rgba(255,255,255,0.03)_inset] dark:backdrop-blur-xl dark:hover:border-cyan-400/25"
+          >
+            <AmICookedLogo nestEagle={nestEagle} />
+            <span className="font-[family-name:var(--font-space-grotesk)] text-lg font-semibold tracking-tight text-violet-700 dark:text-white">
+              AmICooked
+            </span>
+          </Link>
+          <div className="flex items-center gap-2 sm:gap-3">
+            <span className="hidden items-center gap-2 rounded-full border border-slate-200 bg-white px-3 py-1.5 text-[11px] font-medium text-slate-600 shadow-sm sm:inline-flex dark:border-white/10 dark:bg-white/[0.06] dark:text-zinc-300">
+              <span className="relative flex h-2 w-2">
+                <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-60" />
+                <span className="relative inline-flex h-2 w-2 rounded-full bg-emerald-500" />
+              </span>
+              AI online
+            </span>
+            <ThemeToggle />
+          </div>
+        </div>
       </header>
 
       <main className="relative z-10 mx-auto flex min-h-screen max-w-5xl flex-col px-5 pb-20 pt-28 sm:px-8 sm:pt-32">
@@ -74,11 +89,50 @@ export function DeltaLanding() {
           transition={{ delay: 0.45, duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
           className="mx-auto mt-8 max-w-2xl text-center"
         >
-          <p className="text-sm leading-relaxed text-zinc-400 sm:text-base">
-            Upload your materials and let Delta compare what matters in your target to what you have today — with a
-            survival score and a radar you can feel.
+          <p className="text-sm leading-relaxed text-slate-600 dark:text-zinc-400 sm:text-base">
+            Upload your materials and AmICooked measures how cooked you are — target vs what you actually have — with a
+            survival score, a cooked meter, and a radar you can feel.
           </p>
         </motion.div>
+
+        <motion.section
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.52, duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+          className="mx-auto mt-10 grid w-full max-w-4xl gap-4 sm:grid-cols-3"
+          aria-label="Product snapshot"
+        >
+          <div className="rounded-2xl border border-slate-200/90 bg-white p-4 shadow-sm dark:border-white/[0.08] dark:bg-white/[0.04] dark:shadow-none">
+            <div className="mb-2 flex items-center gap-2 text-violet-600 dark:text-violet-300">
+              <LayoutDashboard className="h-4 w-4" strokeWidth={1.75} />
+              <span className="text-[11px] font-semibold uppercase tracking-wider">Dashboard</span>
+            </div>
+            <p className="text-sm font-medium text-slate-800 dark:text-white">Cooked meter + radar</p>
+            <p className="mt-1 text-xs leading-relaxed text-slate-500 dark:text-zinc-500">
+              One glance at how exam- or interview-ready you look on paper.
+            </p>
+          </div>
+          <div className="rounded-2xl border border-slate-200/90 bg-white p-4 shadow-sm dark:border-white/[0.08] dark:bg-white/[0.04] dark:shadow-none">
+            <div className="mb-2 flex items-center gap-2 text-amber-600 dark:text-amber-300">
+              <Sparkles className="h-4 w-4" strokeWidth={1.75} />
+              <span className="text-[11px] font-semibold uppercase tracking-wider">AI insight</span>
+            </div>
+            <p className="text-sm font-medium text-slate-800 dark:text-white">Topic pressure map</p>
+            <p className="mt-1 text-xs leading-relaxed text-slate-500 dark:text-zinc-500">
+              Highlights what the syllabus or JD keeps asking for that your notes or résumé barely touch.
+            </p>
+          </div>
+          <div className="rounded-2xl border border-slate-200/90 bg-white p-4 shadow-sm dark:border-white/[0.08] dark:bg-white/[0.04] dark:shadow-none sm:col-span-1">
+            <div className="mb-2 flex items-center gap-2 text-teal-600 dark:text-teal-300">
+              <BookOpen className="h-4 w-4" strokeWidth={1.75} />
+              <span className="text-[11px] font-semibold uppercase tracking-wider">Prep loop</span>
+            </div>
+            <p className="text-sm font-medium text-slate-800 dark:text-white">Hot Seat drill</p>
+            <p className="mt-1 text-xs leading-relaxed text-slate-500 dark:text-zinc-500">
+              Short, sharp practice on your weakest gaps before the real room.
+            </p>
+          </div>
+        </motion.section>
 
         <motion.section
           initial={{ opacity: 0, y: 28 }}
@@ -87,26 +141,28 @@ export function DeltaLanding() {
           className="mx-auto mt-14 w-full max-w-xl"
           aria-label="Choose your path"
         >
-          <p className="mb-5 text-center font-[family-name:var(--font-space-grotesk)] text-sm font-medium text-zinc-400">
+          <p className="mb-5 text-center font-[family-name:var(--font-space-grotesk)] text-sm font-medium text-slate-500 dark:text-zinc-400">
             Choose your path
           </p>
           <div className="grid gap-5 sm:grid-cols-2">
-            <Link href="/student" className="group relative block rounded-3xl focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400/50">
+            <Link href="/student" className="group relative block rounded-3xl focus:outline-none focus-visible:ring-2 focus-visible:ring-violet-400/60">
               <motion.div
                 whileHover={{ y: -4, scale: 1.01 }}
                 whileTap={{ scale: 0.99 }}
                 transition={{ type: "spring", stiffness: 420, damping: 28 }}
-                className="relative overflow-hidden rounded-3xl border border-cyan-500/25 bg-gradient-to-br from-cyan-500/15 via-white/[0.04] to-transparent p-8 shadow-[0_0_0_1px_rgba(255,255,255,0.04)_inset] backdrop-blur-2xl"
+                className="relative overflow-hidden rounded-3xl border border-cyan-200/90 bg-gradient-to-br from-cyan-50 via-white to-white p-8 shadow-md dark:border-cyan-500/25 dark:from-cyan-500/15 dark:via-white/[0.04] dark:to-transparent dark:shadow-[0_0_0_1px_rgba(255,255,255,0.04)_inset] dark:backdrop-blur-2xl"
               >
-                <div className="pointer-events-none absolute -right-8 -top-10 h-32 w-32 rounded-full bg-cyan-400/20 blur-3xl transition group-hover:bg-cyan-400/30" />
-                <p className="font-[family-name:var(--font-space-grotesk)] text-xs font-semibold uppercase tracking-[0.28em] text-cyan-200/80">
+                <div className="pointer-events-none absolute -right-8 -top-10 h-32 w-32 rounded-full bg-cyan-300/40 blur-3xl transition group-hover:bg-cyan-300/55 dark:bg-cyan-400/20 dark:group-hover:bg-cyan-400/30" />
+                <p className="font-[family-name:var(--font-space-grotesk)] text-xs font-semibold uppercase tracking-[0.28em] text-cyan-700 dark:text-cyan-200/80">
                   Academic
                 </p>
-                <h2 className="mt-3 font-[family-name:var(--font-space-grotesk)] text-2xl font-semibold text-white">Student</h2>
-                <p className="mt-3 text-sm leading-relaxed text-zinc-400">
-                  Syllabus or exam outline vs your notes — close the course gap.
+                <h2 className="mt-3 font-[family-name:var(--font-space-grotesk)] text-2xl font-semibold text-slate-900 dark:text-white">
+                  Student
+                </h2>
+                <p className="mt-3 text-sm leading-relaxed text-slate-600 dark:text-zinc-400">
+                  Syllabus or exam outline vs your notes — see how cooked you are for the course.
                 </p>
-                <span className="mt-8 inline-flex items-center gap-2 text-sm font-medium text-cyan-200/90">
+                <span className="mt-8 inline-flex items-center gap-2 text-sm font-medium text-cyan-700 dark:text-cyan-200/90">
                   Enter workspace
                   <span aria-hidden className="transition group-hover:translate-x-1">
                     →
@@ -115,22 +171,24 @@ export function DeltaLanding() {
               </motion.div>
             </Link>
 
-            <Link href="/career" className="group relative block rounded-3xl focus:outline-none focus-visible:ring-2 focus-visible:ring-rose-400/50">
+            <Link href="/career" className="group relative block rounded-3xl focus:outline-none focus-visible:ring-2 focus-visible:ring-rose-400/60">
               <motion.div
                 whileHover={{ y: -4, scale: 1.01 }}
                 whileTap={{ scale: 0.99 }}
                 transition={{ type: "spring", stiffness: 420, damping: 28 }}
-                className="relative overflow-hidden rounded-3xl border border-rose-500/25 bg-gradient-to-br from-rose-500/12 via-white/[0.04] to-transparent p-8 shadow-[0_0_0_1px_rgba(255,255,255,0.04)_inset] backdrop-blur-2xl"
+                className="relative overflow-hidden rounded-3xl border border-rose-200/90 bg-gradient-to-br from-rose-50 via-white to-white p-8 shadow-md dark:border-rose-500/25 dark:from-rose-500/12 dark:via-white/[0.04] dark:to-transparent dark:shadow-[0_0_0_1px_rgba(255,255,255,0.04)_inset] dark:backdrop-blur-2xl"
               >
-                <div className="pointer-events-none absolute -right-10 top-0 h-36 w-36 rounded-full bg-rose-400/15 blur-3xl transition group-hover:bg-rose-400/25" />
-                <p className="font-[family-name:var(--font-space-grotesk)] text-xs font-semibold uppercase tracking-[0.28em] text-rose-200/80">
+                <div className="pointer-events-none absolute -right-10 top-0 h-36 w-36 rounded-full bg-rose-200/50 blur-3xl transition group-hover:bg-rose-300/60 dark:bg-rose-400/15 dark:group-hover:bg-rose-400/25" />
+                <p className="font-[family-name:var(--font-space-grotesk)] text-xs font-semibold uppercase tracking-[0.28em] text-rose-700 dark:text-rose-200/80">
                   Career
                 </p>
-                <h2 className="mt-3 font-[family-name:var(--font-space-grotesk)] text-2xl font-semibold text-white">Job seeker</h2>
-                <p className="mt-3 text-sm leading-relaxed text-zinc-400">
-                  Job description vs resume — see the exact stack and story gaps.
+                <h2 className="mt-3 font-[family-name:var(--font-space-grotesk)] text-2xl font-semibold text-slate-900 dark:text-white">
+                  Job seeker
+                </h2>
+                <p className="mt-3 text-sm leading-relaxed text-slate-600 dark:text-zinc-400">
+                  Job description vs résumé — map stack and story gaps before the loop.
                 </p>
-                <span className="mt-8 inline-flex items-center gap-2 text-sm font-medium text-rose-200/90">
+                <span className="mt-8 inline-flex items-center gap-2 text-sm font-medium text-rose-700 dark:text-rose-200/90">
                   Enter workspace
                   <span aria-hidden className="transition group-hover:translate-x-1">
                     →
@@ -141,8 +199,8 @@ export function DeltaLanding() {
           </div>
         </motion.section>
 
-        <footer className="mt-auto pt-24 text-center text-xs text-zinc-600">
-          Delta · Phase 3 delta dashboard polish
+        <footer className="mt-auto pt-24 text-center text-xs text-slate-500 dark:text-zinc-600">
+          AmICooked · gap engine + cooked meter
         </footer>
       </main>
     </div>
