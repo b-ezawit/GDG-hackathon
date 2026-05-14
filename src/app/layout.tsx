@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono, Space_Grotesk } from "next/font/google";
 import "./globals.css";
+import { AppThemeProvider } from "@/components/app-theme";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -19,9 +20,9 @@ const spaceGrotesk = Space_Grotesk({
 });
 
 export const metadata: Metadata = {
-  title: "Delta — close the gap before the moment",
+  title: "AmICooked — how cooked are you before the moment?",
   description:
-    "Delta compares your target (syllabus or job description) to your current materials, with survival scoring, radar charts, and a bold cooked meter.",
+    "AmICooked compares your target (syllabus or job description) to your materials, scores how cooked you are, and maps gaps with radar charts and a Hot Seat drill.",
 };
 
 export default function RootLayout({
@@ -32,9 +33,12 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`dark ${geistSans.variable} ${geistMono.variable} ${spaceGrotesk.variable} h-full antialiased`}
+      suppressHydrationWarning
+      className={`${geistSans.variable} ${geistMono.variable} ${spaceGrotesk.variable} h-full antialiased`}
     >
-      <body className="min-h-full flex flex-col">{children}</body>
+      <body className="min-h-full flex flex-col">
+        <AppThemeProvider>{children}</AppThemeProvider>
+      </body>
     </html>
   );
 }

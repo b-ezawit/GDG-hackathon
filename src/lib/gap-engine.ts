@@ -1,6 +1,5 @@
-import OpenAI from "openai";
-
 import { buildSystemPrompt, buildUserPrompt } from "@/lib/gap-prompts";
+import { getServerLlmOrNull } from "@/lib/llm-client";
 import {
   gapAnalysisPayloadSchema,
   type GapAnalysisResult,
@@ -95,9 +94,9 @@ function buildFallback(mode: GapMode, targetText: string, currentText: string): 
   const label = mode === "student" ? "course" : "role";
   return {
     survivalScore,
-    headline: `Heuristic gap scan (${label}) — set OPENAI_API_KEY for full AI analysis.`,
+    headline: `Heuristic gap scan (${label}) — add GROQ_API_KEY or OPENAI_API_KEY for full AI analysis.`,
     summary:
-      "No LLM key was configured on the server, so this is a fast lexical overlap estimate. Upload richer PDFs or paste fuller JD text, then configure OPENAI_API_KEY for calibrated topic extraction and narrative.",
+      "No LLM key was configured on the server, so this is a fast lexical overlap estimate. Upload richer PDFs or paste fuller JD text, then set GROQ_API_KEY (preferred) or OPENAI_API_KEY for calibrated topic extraction and narrative.",
     targetHighlights: topTarget.slice(0, 5).map(([w]) => `Recurring target theme: ${w}`),
     currentHighlights: [...cf.entries()]
       .sort((a, b) => b[1] - a[1])
@@ -112,7 +111,7 @@ function buildFallback(mode: GapMode, targetText: string, currentText: string): 
     bridges: [
       "Paste or upload a denser current-state document (notes or resume) and re-run.",
       "Ensure the target PDF has selectable text (not only scanned images).",
-      "Add OPENAI_API_KEY to enable structured skill/topic mapping.",
+      "Add GROQ_API_KEY or OPENAI_API_KEY to enable structured skill/topic mapping.",
     ],
     radar,
   };
@@ -189,18 +188,18 @@ export async function runGapAnalysis(
   const target = truncate(targetText.trim(), MAX_INPUT_CHARS);
   const current = truncate(currentText.trim(), MAX_INPUT_CHARS);
 
-  const apiKey = process.env.OPENAI_API_KEY?.trim();
-  if (!apiKey) {
+  const llm = getServerLlmOrNull();
+  if (!llm) {
     const fb = buildFallback(mode, target, current);
     return { ...normalizePayload(mode, fb), model: "heuristic-fallback", usedFallback: true };
   }
 
-  const client = new OpenAI({ apiKey });
+  const { client, gapModel } = llm;
   const system = buildSystemPrompt(mode);
   const user = buildUserPrompt(mode, target, current);
 
   const completion = await client.chat.completions.create({
-    model: process.env.OPENAI_GAP_MODEL?.trim() || "gpt-4o-mini",
+    model: gapModel,
     temperature: 0.35,
     response_format: { type: "json_object" },
     messages: [
@@ -217,7 +216,7 @@ export async function runGapAnalysis(
   const normalized = normalizePayload(mode, payload);
   return {
     ...normalized,
-    model: completion.model ?? "gpt-4o-mini",
+    model: completion.model ?? gapModel,
     usedFallback: false,
   };
 }
