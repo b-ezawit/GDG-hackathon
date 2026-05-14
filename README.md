@@ -1,6 +1,3 @@
-# The Reality Check Engine
-
-
 ## Getting Started
 
 1. **Clone the repo**
