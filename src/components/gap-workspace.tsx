@@ -15,9 +15,11 @@ function textFromPdf(d: ParsePdfSuccess): string {
 
 type Props = {
   mode: GapMode;
+  /** Server-derived: whether `GROQ_API_KEY` is set (never expose the key to the client). */
+  liveAnalysisAvailable?: boolean;
 };
 
-export function GapWorkspace({ mode }: Props) {
+export function GapWorkspace({ mode, liveAnalysisAvailable = false }: Props) {
   const [jdText, setJdText] = useState("");
   const [studentTarget, setStudentTarget] = useState("");
   const [studentCurrent, setStudentCurrent] = useState("");
@@ -236,8 +238,9 @@ export function GapWorkspace({ mode }: Props) {
                 <div>
                   <h3 className="font-[family-name:var(--font-space-grotesk)] text-lg font-medium text-rose-100/90">LLM + fallback</h3>
                   <p className="mt-3 text-sm leading-relaxed text-zinc-400">
-                    Set <span className="font-mono text-zinc-300">OPENAI_API_KEY</span> for structured scoring. Without it,
-                    Delta still renders radar + meter from heuristics.
+                    {liveAnalysisAvailable
+                      ? "Live Analysis Active"
+                      : "Running in Heuristic Mode: Connect your AI engine for live scoring."}
                   </p>
                 </div>
                 <div className="rounded-2xl border border-white/[0.06] bg-black/35 p-4 font-mono text-[11px] leading-relaxed text-zinc-500">

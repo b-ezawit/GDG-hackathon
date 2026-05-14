@@ -70,7 +70,7 @@ export function GapAnalysisPanel({ analysis, loading, error }: Props) {
             Model <span className="font-mono text-zinc-200">{analysis.model}</span>
             {analysis.usedFallback && (
               <span className="mt-2 block text-amber-200/85">
-                Heuristic mode — add <span className="font-mono text-zinc-200">OPENAI_API_KEY</span> for full LLM scoring.
+                Powered by Groq (Llama 3.3) — offline estimate while the API is unavailable.
               </span>
             )}
           </p>
