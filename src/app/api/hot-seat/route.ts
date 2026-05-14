@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
-import OpenAI from "openai";
 import { z } from "zod";
+
+import { getServerLlmOrNull } from "@/lib/llm-client";
 
 export const runtime = "nodejs";
 
@@ -24,22 +25,23 @@ export async function POST(request: Request) {
     }
 
     const { mode, weaknesses, messages } = parsed.data;
-    const apiKey = process.env.OPENAI_API_KEY?.trim();
+    const llm = getServerLlmOrNull();
 
-    if (!apiKey) {
+    if (!llm) {
       return NextResponse.json(
         {
           ok: false,
-          error: "OPENAI_API_KEY is missing. The Hot Seat requires an active AI engine to grill you.",
+          error:
+            "GROQ_API_KEY or OPENAI_API_KEY is missing. The Hot Seat needs an active LLM key on the server.",
         },
         { status: 401 }
       );
     }
 
-    const client = new OpenAI({ apiKey });
+    const { client, hotSeatModel } = llm;
 
     const systemPrompt = `
-You are Delta, a high-stakes AI interrogator. 
+You are AmICooked, a high-stakes AI interrogator. 
 Your goal is to grill the user on their specific weak points discovered during a gap analysis for a ${
       mode === "student" ? "course/exam" : "job role"
     }.
@@ -60,7 +62,7 @@ Start the interrogation immediately if this is the first message.
 `.trim();
 
     const response = await client.chat.completions.create({
-      model: process.env.OPENAI_HOTSEAT_MODEL?.trim() || "gpt-4o-mini",
+      model: hotSeatModel,
       temperature: 0.7,
       messages: [
         { role: "system", content: systemPrompt },
