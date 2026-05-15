@@ -224,9 +224,15 @@ Before the presentation...
 
 ---
 
-deployed link: https://am-i-cooked1.netlify.app/
+## deployed link: https://am-i-cooked1.netlify.app/
+## demo: https://www.awesomescreenshot.com/video/52597822?key=a9bc5a3369d2437590bf5231f860d2ad
+
 
 ---
+
+
+
+
 
 
 # 🚀 Getting Started
