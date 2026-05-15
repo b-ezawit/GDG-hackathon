@@ -72,7 +72,7 @@ export function GapWorkspace({ mode }: Props) {
   const accent = mode === "student" ? "cyan" : "rose";
 
   return (
-    <div className="relative isolate min-h-screen overflow-hidden bg-slate-50 text-slate-900 dark:bg-[#06050a] dark:text-zinc-100">
+    <div className="relative isolate min-h-screen overflow-hidden bg-gradient-to-b from-white to-[#ffcccc] text-slate-900 dark:bg-none dark:bg-[#06050a] dark:text-zinc-100">
       <div
         className={`pointer-events-none absolute -left-32 top-0 h-[420px] w-[420px] rounded-full blur-[120px] ds-aurora ${
           mode === "student" ? "bg-cyan-400/25 dark:bg-cyan-500/18" : "bg-rose-300/30 dark:bg-rose-500/16"
@@ -102,7 +102,7 @@ export function GapWorkspace({ mode }: Props) {
               className="flex items-center gap-2 rounded-xl border border-slate-200/90 bg-white px-2 py-1 shadow-sm transition hover:border-violet-300 dark:border-white/[0.08] dark:bg-white/[0.04] dark:shadow-none dark:hover:border-white/15"
             >
               <AmICookedLogo nestEagle />
-              <span className="font-[family-name:var(--font-space-grotesk)] text-base font-semibold tracking-tight text-violet-700 dark:text-white">
+              <span className="font-['Trajan',serif] text-base font-semibold tracking-tight text-[#ff5a00] dark:text-[#ff5a00]">
                 AmICooked
               </span>
             </Link>
@@ -151,7 +151,7 @@ export function GapWorkspace({ mode }: Props) {
             </h1>
             <span className="inline-flex items-center gap-1 rounded-full border border-amber-200 bg-amber-50 px-3 py-1 text-xs font-semibold text-amber-800 dark:border-amber-500/30 dark:bg-amber-500/10 dark:text-amber-100">
               <Flame className="h-3.5 w-3.5" strokeWidth={2} aria-hidden />
-              Cooked-aware
+              Cooked aware
             </span>
           </div>
           <p className="mt-3 max-w-2xl text-sm leading-relaxed text-slate-600 dark:text-zinc-400 sm:text-base">

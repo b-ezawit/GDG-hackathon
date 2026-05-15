@@ -6,7 +6,7 @@ import { useCallback, useEffect, useLayoutEffect, useRef, useState } from "react
 
 import { EAGLE_PHOTO_URL } from "@/lib/eagle-assets";
 
-const LETTERS = ["C", "O", "O", "K", "E", "D"] as const;
+const LETTERS = ["C", "O", "O", "K", "E", "D", "?"] as const;
 
 const HOOK =
   "How cooked are you really — before the exam hall or the interview room decides for you?";
@@ -28,14 +28,14 @@ function Letter({ x, lx, ch }: { x: MotionValue<number>; lx: number; ch: string 
 
   return (
     <motion.span
-      className="pointer-events-none absolute top-1/2 -translate-y-1/2 font-[family-name:var(--font-space-grotesk)] text-[clamp(1.85rem,5.8vw,2.85rem)] font-bold uppercase tracking-[0.14em] text-transparent"
+      className="pointer-events-none absolute top-1/2 -translate-y-1/2 font-[family-name:var(--font-space-grotesk)] text-[clamp(2.5rem,7.5vw,3.8rem)] font-bold uppercase tracking-[0.12em] text-transparent"
       style={{
         left: lx,
         opacity,
-        backgroundImage: "linear-gradient(135deg, rgb(254 243 199), rgb(255 255 255), rgb(186 230 253))",
+        backgroundImage: "linear-gradient(135deg, #ff7e00, #ff3c00)",
         WebkitBackgroundClip: "text",
         backgroundClip: "text",
-        filter: "drop-shadow(0 6px 20px rgba(46,233,217,0.22))",
+        filter: "drop-shadow(0 6px 20px rgba(255,90,0,0.3))",
       }}
       aria-hidden
     >
@@ -221,7 +221,7 @@ export function DeltaIntroSequence({ logoAnchorRef, onNest }: Props) {
     };
   }, [phase, bridge, logoAnchorRef, flyOpacity]);
 
-  const showEmoji = imgFailed;
+  const showEmoji = true; // Always show emoji (🔥) instead of the eagle image
 
   return (
     <div className="relative z-[24] mx-auto w-full max-w-2xl px-4 pt-2">
@@ -239,9 +239,9 @@ export function DeltaIntroSequence({ logoAnchorRef, onNest }: Props) {
               <span
                 className="flex h-[58px] w-[76px] select-none items-center justify-center text-[3.35rem] leading-none drop-shadow-[0_12px_28px_rgba(0,0,0,0.55)] sm:h-[62px] sm:w-[82px] sm:text-[3.65rem]"
                 role="img"
-                aria-label="Eagle"
+                aria-label="Fire"
               >
-                🦅
+                🔥
               </span>
             ) : (
               // eslint-disable-next-line @next/next/no-img-element -- Wikimedia; onError → emoji
@@ -282,9 +282,9 @@ export function DeltaIntroSequence({ logoAnchorRef, onNest }: Props) {
             <span
               className="flex h-full w-full items-center justify-center text-[2.75rem] leading-none drop-shadow-lg sm:text-[3.1rem]"
               role="img"
-              aria-label="Eagle"
+              aria-label="Fire"
             >
-              🦅
+              🔥
             </span>
           ) : (
             <img
