@@ -10,8 +10,8 @@ type Props = {
 };
 
 function scoreHue(s: number): string {
-  if (s >= 72) return "from-emerald-500 via-teal-400 to-cyan-400 dark:from-emerald-400 dark:via-teal-300 dark:to-cyan-300";
-  if (s >= 44) return "from-amber-500 via-orange-500 to-rose-500 dark:from-amber-400 dark:via-orange-400 dark:to-rose-400";
+  if (s <= 28) return "from-emerald-500 via-teal-400 to-cyan-400 dark:from-emerald-400 dark:via-teal-300 dark:to-cyan-300";
+  if (s <= 56) return "from-amber-500 via-orange-500 to-rose-500 dark:from-amber-400 dark:via-orange-400 dark:to-rose-400";
   return "from-rose-700 via-red-600 to-orange-600 dark:from-rose-700 dark:via-red-500 dark:to-orange-500";
 }
 
@@ -32,7 +32,7 @@ export function SurvivalMeter({ score, className }: Props) {
           <p className="font-[family-name:var(--font-space-grotesk)] text-xs font-semibold uppercase tracking-[0.28em] text-slate-500 dark:text-zinc-500">
             Cooked meter
           </p>
-          <p className="mt-1 text-[11px] text-slate-500 dark:text-zinc-600">Deep red = cooked · vibrant green = surviving</p>
+          <p className="mt-1 text-[11px] text-slate-500 dark:text-zinc-600">Vibrant green = survivor · deep red = cooked</p>
         </div>
         <motion.span
           key={clamped}
@@ -60,11 +60,11 @@ export function SurvivalMeter({ score, className }: Props) {
           </motion.div>
         </div>
         <div className="mt-2 flex justify-between px-0.5 font-mono text-[10px] uppercase tracking-widest text-slate-500 dark:text-zinc-600">
+          <span className="text-emerald-600 dark:text-emerald-400/80">Survivor</span>
           <span className="inline-flex items-center gap-1 font-semibold text-[#7f1d1d] dark:text-rose-300">
             Cooked
             <Flame className="h-3.5 w-3.5 shrink-0 text-[#991b1b] dark:text-orange-400" strokeWidth={2} aria-hidden />
           </span>
-          <span className="text-emerald-600 dark:text-emerald-400/80">Surviving</span>
         </div>
       </div>
     </div>

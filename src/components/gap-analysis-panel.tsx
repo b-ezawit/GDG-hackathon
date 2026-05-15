@@ -7,6 +7,7 @@ import { SurvivalMeter } from "@/components/survival-meter";
 import { HotSeat } from "@/components/hot-seat";
 import { Zap } from "lucide-react";
 import { useState } from "react";
+import Link from "next/link";
 import type { GapAnalysisResult } from "@/lib/gap-schema";
 
 type Props = {
@@ -23,7 +24,7 @@ export function GapAnalysisPanel({ analysis, loading, error }: Props) {
       <div className="rounded-3xl border border-slate-200/90 bg-white p-10 text-center shadow-md dark:border-white/[0.1] dark:bg-white/[0.04] dark:shadow-[0_0_0_1px_rgba(255,255,255,0.03)_inset] dark:backdrop-blur-2xl">
         <p className="inline-flex items-center justify-center gap-3 text-sm text-cyan-700 dark:text-cyan-200/90">
           <span className="h-4 w-4 animate-spin rounded-full border-2 border-cyan-500/30 border-t-cyan-600 dark:border-cyan-400/30 dark:border-t-cyan-400" />
-          Running gap engine — comparing target vs current…
+          Running gap engine comparing target vs current…
         </p>
       </div>
     );
@@ -67,10 +68,9 @@ export function GapAnalysisPanel({ analysis, loading, error }: Props) {
         <div className="rounded-3xl border border-slate-200/90 bg-white p-6 shadow-md dark:border-white/[0.1] dark:bg-white/[0.04] dark:shadow-[0_0_0_1px_rgba(255,255,255,0.03)_inset] dark:backdrop-blur-2xl sm:p-8">
           <p className="mb-2 font-mono text-[10px] uppercase tracking-widest text-slate-500 dark:text-zinc-600">Engine</p>
           <p className="text-sm text-slate-600 dark:text-zinc-400">
-            Model <span className="font-mono text-slate-900 dark:text-zinc-200">{analysis.model}</span>
             {analysis.usedFallback && (
               <span className="mt-2 block text-amber-800 dark:text-amber-200/85">
-                Heuristic mode — add <span className="font-mono text-slate-900 dark:text-zinc-200">GROQ_API_KEY</span> or{" "}
+                Heuristic mode add <span className="font-mono text-slate-900 dark:text-zinc-200">GROQ_API_KEY</span> or{" "}
                 <span className="font-mono text-slate-900 dark:text-zinc-200">OPENAI_API_KEY</span> for full LLM scoring.
               </span>
             )}
@@ -157,6 +157,20 @@ export function GapAnalysisPanel({ analysis, loading, error }: Props) {
             <li key={b}>{b}</li>
           ))}
         </ol>
+      </div>
+
+      <div className="relative group overflow-hidden rounded-3xl border border-amber-200/90 bg-gradient-to-br from-amber-50 via-white to-orange-50 p-6 shadow-md dark:border-amber-500/30 dark:from-amber-500/10 dark:via-zinc-900/40 dark:to-transparent dark:shadow-[0_0_20px_rgba(245,158,11,0.1)] mb-8">
+        <h3 className="font-[family-name:var(--font-space-grotesk)] text-2xl font-bold text-slate-900 dark:text-white">
+          {analysis.mode === "student" ? "Take quiz" : "Take mock interview"}
+        </h3>
+        <p className="mt-2 text-sm text-slate-600 dark:text-zinc-400">
+          Premium feature. Upgrade to unlock full access with payment.
+        </p>
+        <div className="mt-6">
+          <Link href="/premium" className="inline-flex items-center justify-center rounded-xl bg-amber-500 px-6 py-3 text-sm font-semibold text-white shadow-sm hover:bg-amber-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-amber-500">
+            Continue
+          </Link>
+        </div>
       </div>
 
       <div className="relative group overflow-hidden rounded-3xl border border-rose-200/90 bg-gradient-to-br from-rose-50 via-white to-violet-50 p-1 shadow-md dark:border-rose-500/30 dark:from-rose-500/15 dark:via-zinc-900/40 dark:to-transparent dark:shadow-[0_0_20px_rgba(244,63,94,0.1)]">
