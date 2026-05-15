@@ -3,7 +3,7 @@
 import dynamic from "next/dynamic";
 import { motion } from "framer-motion";
 import Link from "next/link";
-import { useRef, useState } from "react";
+import { useRef, useState, useEffect } from "react";
 import { BookOpen, LayoutDashboard, Sparkles } from "lucide-react";
 
 import { DeltaIntroSequence } from "@/components/delta-intro-sequence";
@@ -27,7 +27,7 @@ export function DeltaLanding() {
   };
 
   return (
-    <div className="relative isolate min-h-screen overflow-hidden bg-slate-50 text-slate-900 dark:bg-[#06050a] dark:text-zinc-100">
+    <div className="relative isolate min-h-screen overflow-hidden bg-gradient-to-b from-white to-[#ffcccc] text-slate-900 dark:bg-none dark:bg-[#06050a] dark:text-zinc-100">
       <div className="hidden dark:block">
         <GlitterField />
       </div>
@@ -59,10 +59,14 @@ export function DeltaLanding() {
             className="group flex items-center gap-3 rounded-2xl border border-slate-200/90 bg-white/90 px-2 py-1.5 pr-4 shadow-sm transition hover:border-violet-300 dark:border-white/[0.08] dark:bg-black/35 dark:shadow-[0_0_0_1px_rgba(255,255,255,0.03)_inset] dark:backdrop-blur-xl dark:hover:border-cyan-400/25"
           >
             <AmICookedLogo nestEagle={nestEagle} />
-            <span className="font-[family-name:var(--font-space-grotesk)] text-lg font-semibold tracking-tight text-violet-700 dark:text-white">
+            <span className="font-['Trajan',serif] text-lg font-semibold tracking-tight text-[#ff5a00] dark:text-[#ff5a00]">
               AmICooked
             </span>
           </Link>
+          <div className="hidden sm:flex items-center gap-6 text-sm font-medium">
+            <Link href="/student" className="text-slate-600 hover:text-violet-600 dark:text-zinc-400 dark:hover:text-cyan-400 transition-colors">Student</Link>
+            <Link href="/career" className="text-slate-600 hover:text-violet-600 dark:text-zinc-400 dark:hover:text-cyan-400 transition-colors">Job Seeker</Link>
+          </div>
           <div className="flex items-center gap-2 sm:gap-3">
             <span className="hidden items-center gap-2 rounded-full border border-slate-200 bg-white px-3 py-1.5 text-[11px] font-medium text-slate-600 shadow-sm sm:inline-flex dark:border-white/10 dark:bg-white/[0.06] dark:text-zinc-300">
               <span className="relative flex h-2 w-2">
@@ -95,44 +99,7 @@ export function DeltaLanding() {
           </p>
         </motion.div>
 
-        <motion.section
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.52, duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
-          className="mx-auto mt-10 grid w-full max-w-4xl gap-4 sm:grid-cols-3"
-          aria-label="Product snapshot"
-        >
-          <div className="rounded-2xl border border-slate-200/90 bg-white p-4 shadow-sm dark:border-white/[0.08] dark:bg-white/[0.04] dark:shadow-none">
-            <div className="mb-2 flex items-center gap-2 text-violet-600 dark:text-violet-300">
-              <LayoutDashboard className="h-4 w-4" strokeWidth={1.75} />
-              <span className="text-[11px] font-semibold uppercase tracking-wider">Dashboard</span>
-            </div>
-            <p className="text-sm font-medium text-slate-800 dark:text-white">Cooked meter + radar</p>
-            <p className="mt-1 text-xs leading-relaxed text-slate-500 dark:text-zinc-500">
-              One glance at how exam- or interview-ready you look on paper.
-            </p>
-          </div>
-          <div className="rounded-2xl border border-slate-200/90 bg-white p-4 shadow-sm dark:border-white/[0.08] dark:bg-white/[0.04] dark:shadow-none">
-            <div className="mb-2 flex items-center gap-2 text-amber-600 dark:text-amber-300">
-              <Sparkles className="h-4 w-4" strokeWidth={1.75} />
-              <span className="text-[11px] font-semibold uppercase tracking-wider">AI insight</span>
-            </div>
-            <p className="text-sm font-medium text-slate-800 dark:text-white">Topic pressure map</p>
-            <p className="mt-1 text-xs leading-relaxed text-slate-500 dark:text-zinc-500">
-              Highlights what the syllabus or JD keeps asking for that your notes or résumé barely touch.
-            </p>
-          </div>
-          <div className="rounded-2xl border border-slate-200/90 bg-white p-4 shadow-sm dark:border-white/[0.08] dark:bg-white/[0.04] dark:shadow-none sm:col-span-1">
-            <div className="mb-2 flex items-center gap-2 text-teal-600 dark:text-teal-300">
-              <BookOpen className="h-4 w-4" strokeWidth={1.75} />
-              <span className="text-[11px] font-semibold uppercase tracking-wider">Prep loop</span>
-            </div>
-            <p className="text-sm font-medium text-slate-800 dark:text-white">Hot Seat drill</p>
-            <p className="mt-1 text-xs leading-relaxed text-slate-500 dark:text-zinc-500">
-              Short, sharp practice on your weakest gaps before the real room.
-            </p>
-          </div>
-        </motion.section>
+        <CarouselSection />
 
         <motion.section
           initial={{ opacity: 0, y: 28 }}
@@ -204,5 +171,94 @@ export function DeltaLanding() {
         </footer>
       </main>
     </div>
+  );
+}
+
+function CarouselSection() {
+  const [activeCard, setActiveCard] = useState(0);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setActiveCard((prev) => (prev + 1) % 3);
+    }, 3000);
+    return () => clearInterval(interval);
+  }, []);
+
+  const cards = [
+    {
+      icon: <LayoutDashboard className="h-4 w-4" strokeWidth={1.75} />,
+      iconColor: "text-violet-600 dark:text-violet-300",
+      title: "Dashboard",
+      heading: "Cooked meter + radar",
+      desc: "One glance at how exam or interview ready you look on paper."
+    },
+    {
+      icon: <Sparkles className="h-4 w-4" strokeWidth={1.75} />,
+      iconColor: "text-amber-600 dark:text-amber-300",
+      title: "AI insight",
+      heading: "Topic pressure map",
+      desc: "Highlights what the syllabus or JD keeps asking for that your notes or résumé barely touch."
+    },
+    {
+      icon: <BookOpen className="h-4 w-4" strokeWidth={1.75} />,
+      iconColor: "text-teal-600 dark:text-teal-300",
+      title: "Prep loop",
+      heading: "Hot Seat drill",
+      desc: "Short, sharp practice on your weakest gaps before the real room."
+    }
+  ];
+
+  return (
+    <motion.section
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ delay: 0.52, duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+      className="mx-auto mt-10 relative flex h-[160px] w-full max-w-4xl items-center justify-center overflow-visible"
+      aria-label="Product snapshot"
+    >
+      {cards.map((card, i) => {
+        const isActive = i === activeCard;
+        const isLeft = i === (activeCard + 2) % 3;
+        const isRight = i === (activeCard + 1) % 3;
+
+        let x = 0;
+        let zIndex = 10;
+        let scale = 1;
+        let filter = "blur(0px)";
+        let opacity = 1;
+
+        if (isLeft) {
+          x = -240;
+          zIndex = 5;
+          scale = 0.85;
+          filter = "blur(4px)";
+          opacity = 0.6;
+        } else if (isRight) {
+          x = 240;
+          zIndex = 5;
+          scale = 0.85;
+          filter = "blur(4px)";
+          opacity = 0.6;
+        }
+
+        return (
+          <motion.div
+            key={i}
+            animate={{ x, scale, filter, opacity, zIndex }}
+            transition={{ duration: 0.6, ease: [0.32, 0.72, 0, 1] }}
+            className="absolute w-[300px] sm:w-[320px] rounded-2xl border border-slate-200/90 bg-white p-4 shadow-sm dark:border-white/[0.08] dark:bg-white/[0.04] dark:shadow-none"
+          >
+            <div className={`mb-2 flex items-center gap-2 ${card.iconColor}`}>
+              {card.icon}
+              <span className="text-[11px] font-semibold uppercase tracking-wider">{card.title}</span>
+            </div>
+            <p className="text-sm font-medium text-slate-800 dark:text-white">{card.heading}</p>
+            <p className="mt-1 text-xs leading-relaxed text-slate-500 dark:text-zinc-500">
+              {card.desc}
+            </p>
+          </motion.div>
+        );
+      })}
+    </motion.section>
   );
 }
