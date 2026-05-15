@@ -143,41 +143,6 @@ Then it generates:
 
 ---
 
-# 🛠️ Tech Stack
-
-Built for speed, pressure, and emotional damage.
-
-| Technology | Purpose |
-|---|---|
-| Next.js | Frontend + Fullstack framework |
-| Framer Motion | Smooth animations & transitions |
-| Groq + Llama 3.3 | AI reasoning and interrogation |
-| Tailwind CSS | Styling |
-| TypeScript | Safer development |
-| Radar Visualizations | Knowledge gap analysis |
-
-
-## 4️⃣ Run the Development Server
-
-```bash
-npm run dev
-```
-
----
-
-## 5️⃣ Face Reality
-
-Open:
-
-```bash
-http://localhost:3000
-```
-
-Upload your materials.  
-Enter the Hot Seat.  
-Find out if you’re cooked.
-
----
 
 # 🎯 Use Cases
 
@@ -297,5 +262,41 @@ Add your API key:
 OPENAI_API_KEY=your_api_key_here
 ```
 
+
+## 4️⃣ Run the Development Server
+
+```bash
+npm run dev
+```
+
+---
+
+## 5️⃣ Face Reality
+
+Open:
+
+```bash
+http://localhost:3000
+```
+
+Upload your materials.  
+Enter the Hot Seat.  
+Find out if you’re cooked.
+
+---
+
+
+# 🛠️ Tech Stack
+
+Built for speed, pressure, and emotional damage.
+
+| Technology | Purpose |
+|---|---|
+| Next.js | Frontend + Fullstack framework |
+| Framer Motion | Smooth animations & transitions |
+| Groq + Llama 3.3 | AI reasoning and interrogation |
+| Tailwind CSS | Styling |
+| TypeScript | Safer development |
+| Radar Visualizations | Knowledge gap analysis |
 
 ---
