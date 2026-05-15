@@ -156,45 +156,6 @@ Built for speed, pressure, and emotional damage.
 | TypeScript | Safer development |
 | Radar Visualizations | Knowledge gap analysis |
 
----
-
-# 🚀 Getting Started
-
-## 1️⃣ Clone the Repository
-
-```bash
-git clone https://github.com/yourusername/amicooked.git
-cd amicooked
-```
-
----
-
-## 2️⃣ Install Dependencies
-
-```bash
-npm install
-```
-
----
-
-## 3️⃣ Configure Environment Variables
-
-Copy the example environment file:
-
-```bash
-cp .env.example .env
-```
-
-Add your API key:
-
-```env
-OPENAI_API_KEY=your_api_key_here
-```
-
-Keep it secret.  
-Your AI overlord depends on it. 🤫
-
----
 
 ## 4️⃣ Run the Development Server
 
@@ -297,3 +258,44 @@ Before the presentation...
 ## Are you actually ready?
 
 # Or are you cooked?
+
+
+---
+
+
+
+# 🚀 Getting Started
+
+## 1️⃣ Clone the Repository
+
+```bash
+git clone https://github.com/yourusername/amicooked.git
+cd amicooked
+```
+
+---
+
+## 2️⃣ Install Dependencies
+
+```bash
+npm install
+```
+
+---
+
+## 3️⃣ Configure Environment Variables
+
+Copy the example environment file:
+
+```bash
+cp .env.example .env
+```
+
+Add your API key:
+
+```env
+OPENAI_API_KEY=your_api_key_here
+```
+
+
+---
