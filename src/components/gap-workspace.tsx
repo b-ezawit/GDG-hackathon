@@ -17,9 +17,11 @@ function textFromPdf(d: ParsePdfSuccess): string {
 
 type Props = {
   mode: GapMode;
+  /** Server-derived: whether `GROQ_API_KEY` is set (never expose the key to the client). */
+  liveAnalysisAvailable?: boolean;
 };
 
-export function GapWorkspace({ mode }: Props) {
+export function GapWorkspace({ mode, liveAnalysisAvailable = false }: Props) {
   const [jdText, setJdText] = useState("");
   const [studentTarget, setStudentTarget] = useState("");
   const [studentCurrent, setStudentCurrent] = useState("");
@@ -259,6 +261,11 @@ export function GapWorkspace({ mode }: Props) {
               </article>
               <aside className="flex flex-col justify-between gap-6 rounded-3xl border border-rose-200/80 bg-gradient-to-b from-rose-50 to-white p-6 shadow-md dark:border-rose-500/20 dark:from-rose-500/8 dark:to-transparent dark:shadow-[0_0_0_1px_rgba(251,113,133,0.08)_inset] dark:backdrop-blur-2xl sm:p-8">
                 <div>
+                  <h3 className="font-[family-name:var(--font-space-grotesk)] text-lg font-medium text-rose-100/90">LLM + fallback</h3>
+                  <p className="mt-3 text-sm leading-relaxed text-zinc-400">
+                    {liveAnalysisAvailable
+                      ? "Live Analysis Active"
+                      : "Running in Heuristic Mode: Connect your AI engine for live scoring."}
                   <h3 className="font-[family-name:var(--font-space-grotesk)] text-lg font-medium text-rose-900 dark:text-rose-100/90">
                     LLM + fallback
                   </h3>
