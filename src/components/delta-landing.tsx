@@ -56,7 +56,7 @@ export function DeltaLanding() {
           <Link
             ref={logoAnchorRef}
             href="/"
-            className="group flex items-center gap-3 rounded-2xl border border-slate-200/90 bg-white/90 px-2 py-1.5 pr-4 shadow-sm transition hover:border-violet-300 dark:border-white/[0.08] dark:bg-black/35 dark:shadow-[0_0_0_1px_rgba(255,255,255,0.03)_inset] dark:backdrop-blur-xl dark:hover:border-cyan-400/25"
+            className="group flex items-center gap-3"
           >
             <AmICookedLogo nestEagle={nestEagle} />
             <span className="font-['Trajan',serif] text-lg font-semibold tracking-tight text-[#ff5a00] dark:text-[#ff5a00]">
@@ -94,7 +94,7 @@ export function DeltaLanding() {
           className="mx-auto mt-8 max-w-2xl text-center"
         >
           <p className="text-sm leading-relaxed text-slate-600 dark:text-zinc-400 sm:text-base">
-            Upload your materials and AmICooked measures how cooked you are — target vs what you actually have — with a
+            Upload your materials and AmICooked measures how cooked you are target vs what you actually have with a
             survival score, a cooked meter, and a radar you can feel.
           </p>
         </motion.div>
@@ -127,7 +127,7 @@ export function DeltaLanding() {
                   Student
                 </h2>
                 <p className="mt-3 text-sm leading-relaxed text-slate-600 dark:text-zinc-400">
-                  Syllabus or exam outline vs your notes — see how cooked you are for the course.
+                  Syllabus or exam outline vs your notes see how cooked you are for the course.
                 </p>
                 <span className="mt-8 inline-flex items-center gap-2 text-sm font-medium text-cyan-700 dark:text-cyan-200/90">
                   Enter workspace
@@ -153,7 +153,7 @@ export function DeltaLanding() {
                   Job seeker
                 </h2>
                 <p className="mt-3 text-sm leading-relaxed text-slate-600 dark:text-zinc-400">
-                  Job description vs résumé — map stack and story gaps before the loop.
+                  Job description vs résumé map stack and story gaps before the loop.
                 </p>
                 <span className="mt-8 inline-flex items-center gap-2 text-sm font-medium text-rose-700 dark:text-rose-200/90">
                   Enter workspace

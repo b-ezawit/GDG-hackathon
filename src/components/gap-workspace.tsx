@@ -61,7 +61,12 @@ export function GapWorkspace({ mode }: Props) {
         setAnalysisError(data.error ?? `Request failed (${res.status}).`);
         return;
       }
-      if (data.analysis) setAnalysis(data.analysis);
+      if (data.analysis) {
+        setAnalysis(data.analysis);
+        setTimeout(() => {
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        }, 100);
+      }
     } catch {
       setAnalysisError("Network error while calling the gap engine.");
     } finally {
@@ -99,7 +104,7 @@ export function GapWorkspace({ mode }: Props) {
           <div className="flex items-center gap-3">
             <Link
               href="/"
-              className="flex items-center gap-2 rounded-xl border border-slate-200/90 bg-white px-2 py-1 shadow-sm transition hover:border-violet-300 dark:border-white/[0.08] dark:bg-white/[0.04] dark:shadow-none dark:hover:border-white/15"
+              className="flex items-center gap-2"
             >
               <AmICookedLogo nestEagle />
               <span className="font-['Trajan',serif] text-base font-semibold tracking-tight text-[#ff5a00] dark:text-[#ff5a00]">
@@ -156,8 +161,8 @@ export function GapWorkspace({ mode }: Props) {
           </div>
           <p className="mt-3 max-w-2xl text-sm leading-relaxed text-slate-600 dark:text-zinc-400 sm:text-base">
             {mode === "student"
-              ? "Drop your syllabus and notes — AmICooked returns a survival score, a cooked meter, and a radar of topic pressure vs your coverage."
-              : "Paste the JD and upload your résumé — AmICooked maps stack and story gaps with the same radar treatment."}
+              ? "Drop your syllabus and notes AmICooked returns a survival score, a cooked meter, and a radar of topic pressure vs your coverage."
+              : "Paste the JD and upload your résumé AmICooked maps stack and story gaps with the same radar treatment."}
           </p>
         </motion.div>
 
@@ -165,7 +170,7 @@ export function GapWorkspace({ mode }: Props) {
           initial={{ opacity: 0, y: 18 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.06, ease: [0.22, 1, 0.36, 1] }}
-          className="grid gap-8 lg:grid-cols-2"
+          className="w-full"
         >
           {mode === "student" ? (
             <>
@@ -189,31 +194,6 @@ export function GapWorkspace({ mode }: Props) {
                   />
                 </div>
               </article>
-              <aside className="flex flex-col justify-between gap-6 rounded-3xl border border-cyan-200/80 bg-gradient-to-b from-cyan-50 to-white p-6 shadow-md dark:border-cyan-500/20 dark:from-cyan-500/8 dark:to-transparent dark:shadow-[0_0_0_1px_rgba(46,233,217,0.08)_inset] dark:backdrop-blur-2xl sm:p-8">
-                <div>
-                  <h3 className="font-[family-name:var(--font-space-grotesk)] text-lg font-medium text-cyan-900 dark:text-cyan-100/90">
-                    AmICooked dashboard
-                  </h3>
-                  <p className="mt-3 text-sm leading-relaxed text-slate-600 dark:text-zinc-400">
-                    Charts and the cooked meter light up after you run analysis. Golden demo pairs still land best on
-                    stage.
-                  </p>
-                </div>
-                <ul className="space-y-3 text-sm text-slate-600 dark:text-zinc-500">
-                  <li className="flex gap-2">
-                    <span className="text-cyan-600 dark:text-cyan-400/80">01</span>
-                    Radar: target vs you
-                  </li>
-                  <li className="flex gap-2">
-                    <span className="text-cyan-600 dark:text-cyan-400/80">02</span>
-                    Cooked meter & survival %
-                  </li>
-                  <li className="flex gap-2">
-                    <span className="text-cyan-600 dark:text-cyan-400/80">03</span>
-                    Atomic bridges list
-                  </li>
-                </ul>
-              </aside>
             </>
           ) : (
             <>
@@ -257,21 +237,6 @@ export function GapWorkspace({ mode }: Props) {
                   />
                 </div>
               </article>
-              <aside className="flex flex-col justify-between gap-6 rounded-3xl border border-rose-200/80 bg-gradient-to-b from-rose-50 to-white p-6 shadow-md dark:border-rose-500/20 dark:from-rose-500/8 dark:to-transparent dark:shadow-[0_0_0_1px_rgba(251,113,133,0.08)_inset] dark:backdrop-blur-2xl sm:p-8">
-                <div>
-                  <h3 className="font-[family-name:var(--font-space-grotesk)] text-lg font-medium text-rose-900 dark:text-rose-100/90">
-                    LLM + fallback
-                  </h3>
-                  <p className="mt-3 text-sm leading-relaxed text-slate-600 dark:text-zinc-400">
-                    Set <span className="font-mono text-slate-800 dark:text-zinc-300">GROQ_API_KEY</span> or{" "}
-                    <span className="font-mono text-slate-800 dark:text-zinc-300">OPENAI_API_KEY</span> for structured scoring. Without it,
-                    AmICooked still renders radar + meter from heuristics.
-                  </p>
-                </div>
-                <div className="rounded-2xl border border-slate-200 bg-slate-50 p-4 font-mono text-[11px] leading-relaxed text-slate-600 dark:border-white/[0.06] dark:bg-black/35 dark:text-zinc-500">
-                  <span className="text-rose-600 dark:text-rose-300/80">tip</span> — Keep a golden JD + resume pair for finals.
-                </div>
-              </aside>
             </>
           )}
         </motion.div>
