@@ -242,9 +242,6 @@ Use responsibly.
 - Competitive leaderboard 🥇
 - Emotion-aware pressure scaling 😭
 
----
-
----
 
 
 ---
@@ -262,6 +259,9 @@ Before the presentation...
 
 ---
 
+deployed link: https://am-i-cooked1.netlify.app/
+
+---
 
 
 # 🚀 Getting Started
