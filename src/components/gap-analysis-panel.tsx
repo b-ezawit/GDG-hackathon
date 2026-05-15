@@ -69,8 +69,6 @@ export function GapAnalysisPanel({ analysis, loading, error }: Props) {
           <p className="text-sm text-slate-600 dark:text-zinc-400">
             Model <span className="font-mono text-slate-900 dark:text-zinc-200">{analysis.model}</span>
             {analysis.usedFallback && (
-              <span className="mt-2 block text-amber-200/85">
-                Powered by Groq (Llama 3.3) — offline estimate while the API is unavailable.
               <span className="mt-2 block text-amber-800 dark:text-amber-200/85">
                 Heuristic mode — add <span className="font-mono text-slate-900 dark:text-zinc-200">GROQ_API_KEY</span> or{" "}
                 <span className="font-mono text-slate-900 dark:text-zinc-200">OPENAI_API_KEY</span> for full LLM scoring.
