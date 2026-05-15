@@ -1,38 +1,299 @@
-🔥 AmICooked: The Reality Check Engine
-Ever looked at a syllabus or a job description and thought, "Wait, am I cooked?" Well, we’re here to give you the answer.
+# 🔥 AmICooked — The Reality Check Engine
 
-AmICooked is a high-stakes gap analysis platform built to reveal the brutal difference between where you are and where you actually need to be. Whether you’re a student comparing your messy notes against a course syllabus or a job seeker matching your résumé to a "dream" job posting, we use fancy math (lexical heuristics) and AI mapping to find exactly what’s missing from your brain. 🧠💻
+> “You thought you were ready. The system disagrees.”
 
-✨ The Vibe
-The Cooked Meter: Get an instant, data-driven reality check via a sleek 3D dashboard. If the meter is hitting red, you’ve got work to do. 📈🚩
+AmICooked is an AI-powered **gap analysis and pressure-training platform** designed to answer one terrifying question:
 
-Interactive Radar Charts: Visualizing your failure (and eventual success) never looked so good.
+# ❓ “Am I cooked?”
 
-The "Hot Seat": This is where it gets real. It's an AI-driven interrogation arena designed for active pressure training. 🎤🔥
+And no — not the *good* kind of cooked.  
+Not “locked in.”  
+Not “cracked.”  
+Not “built different.”
 
-Pressure Cooker Mode: We launch a relentless questioning session based on your exact knowledge gaps. With a ticking timer and rising stress indicators, you’ll learn to think fast or... well, you know.
+We mean:
 
-🛠️ The Tech Stack
-We built this to be fast and intense:
+> **How unprepared are you before the real moment hits?** 😭
 
-Framework: Next.js
+Whether it’s:
+- an exam tomorrow,
+- a technical interview,
+- a hackathon,
+- a coding assessment,
+- or a job application you are *definitely* underqualified for...
 
-Animations: Framer Motion (for those smooth "oh no" moments)
+AmICooked measures the brutal difference between:
+- what you currently know 🧠
+- and what you actually need to know 💀
 
-Brainpower: Groq (Llama 3.3) 🤖
+---
 
-🚀 Getting Started
-Ready to see if you'll survive? Follow these steps:
+# 🚨 What Does AmICooked Actually Do?
 
-Clone the repo (Grab the code and get in here!)
+You upload:
+- a syllabus
+- course outline
+- job description
+- roadmap
+- notes
+- résumé
+- portfolio
+- or basically anything related to a skill requirement
 
-Install dependencies: ```bash
+Then AmICooked:
+- analyzes the content using **AI + lexical heuristics**
+- maps missing concepts
+- identifies weak areas
+- visualizes your knowledge gaps
+- and pressure-tests you in real time
+
+The result?
+
+A cold, data-driven reality check.
+
+---
+
+# ✨ Features
+
+## 📉 The Cooked Meter™
+
+A live readiness indicator showing exactly how cooked you are.
+
+- 🟢 Green = You might survive
+- 🟡 Yellow = You should probably study
+- 🔴 Red = Start praying
+
+Built with smooth animations and dynamic scoring to give instant feedback.
+
+---
+
+## 📊 Interactive Radar Charts
+
+See your strengths and weaknesses visually.
+
+Track:
+- technical depth
+- missing topics
+- confidence levels
+- preparedness coverage
+- conceptual balance
+
+Because watching your weaknesses form a polygon somehow hurts more.
+
+---
+
+## 🎤 The Hot Seat
+
+This is where things stop being theoretical.
+
+The Hot Seat is an AI interrogation arena built for:
+- interview preparation
+- viva defense practice
+- coding pressure training
+- rapid-fire questioning
+- confidence stress testing
+
+The AI targets your exact weak points and keeps pushing until you either:
+- improve,
+- adapt,
+- or completely collapse under pressure.
+
+---
+
+## ⏳ Pressure Cooker Mode
+
+Our most intense feature.
+
+You are placed into a timed questioning session where:
+- questions become progressively harder
+- timers create urgency
+- stress indicators rise
+- hesitation gets punished
+- weak areas get repeatedly attacked
+
+Designed to simulate:
+- real interviews
+- oral exams
+- technical panels
+- high-pressure environments
+
+Think fast.
+
+---
+
+# 🧠 How It Works
+
+AmICooked combines:
+- semantic similarity analysis
+- lexical heuristics
+- AI concept mapping
+- knowledge extraction
+- adaptive questioning
+
+to compare:
+- required knowledge
+vs
+- demonstrated knowledge
+
+Then it generates:
+- gap reports
+- readiness scoring
+- targeted questioning
+- personalized pressure training
+
+---
+
+# 🛠️ Tech Stack
+
+Built for speed, pressure, and emotional damage.
+
+| Technology | Purpose |
+|---|---|
+| Next.js | Frontend + Fullstack framework |
+| Framer Motion | Smooth animations & transitions |
+| Groq + Llama 3.3 | AI reasoning and interrogation |
+| Tailwind CSS | Styling |
+| TypeScript | Safer development |
+| Radar Visualizations | Knowledge gap analysis |
+
+---
+
+# 🚀 Getting Started
+
+## 1️⃣ Clone the Repository
+
+```bash
+git clone https://github.com/yourusername/amicooked.git
+cd amicooked
+```
+
+---
+
+## 2️⃣ Install Dependencies
+
+```bash
 npm install
+```
 
-Set up Environment: Copy .env.example to .env and add your OPENAI_API_KEY. (Keep it secret, keep it safe 🤫)
+---
 
-Run the app:
+## 3️⃣ Configure Environment Variables
 
-Bash
+Copy the example environment file:
+
+```bash
+cp .env.example .env
+```
+
+Add your API key:
+
+```env
+OPENAI_API_KEY=your_api_key_here
+```
+
+Keep it secret.  
+Your AI overlord depends on it. 🤫
+
+---
+
+## 4️⃣ Run the Development Server
+
+```bash
 npm run dev
-Face Reality: Open http://localhost:3000 and start the roast.
+```
+
+---
+
+## 5️⃣ Face Reality
+
+Open:
+
+```bash
+http://localhost:3000
+```
+
+Upload your materials.  
+Enter the Hot Seat.  
+Find out if you’re cooked.
+
+---
+
+# 🎯 Use Cases
+
+## 🎓 Students
+Compare:
+- notes vs syllabus
+- preparation vs exam scope
+- understanding vs requirements
+
+Perfect for:
+- finals
+- oral exams
+- presentations
+- assignments
+- coding courses
+
+---
+
+## 💼 Job Seekers
+Compare:
+- résumé vs job description
+- skills vs market expectations
+- portfolio vs role requirements
+
+Practice:
+- technical interviews
+- behavioral interviews
+- rapid questioning
+
+---
+
+## 🧑‍💻 Developers
+Stress test yourself against:
+- frameworks
+- system design concepts
+- DSA topics
+- hackathon prep
+- project defense questions
+
+---
+
+# ⚠️ Warning
+
+AmICooked may cause:
+- existential crises
+- sudden productivity
+- panic-driven studying
+- overclocked brain activity
+- emotional damage
+
+Use responsibly.
+
+---
+
+# 🏆 Future Plans
+
+- Voice interrogation mode 🎙️
+- Multiplayer survival rooms 👥
+- AI-generated study roadmaps 🗺️
+- Resume optimization 📄
+- Real-time interview simulation 💼
+- Competitive leaderboard 🥇
+- Emotion-aware pressure scaling 😭
+
+---
+
+---
+
+
+---
+
+# 💀 Final Question
+
+Before the exam...  
+Before the interview...  
+Before the presentation...
+
+## Are you actually ready?
+
+# Or are you cooked?
