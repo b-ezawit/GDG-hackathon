@@ -17,9 +17,11 @@ function textFromPdf(d: ParsePdfSuccess): string {
 
 type Props = {
   mode: GapMode;
+  /** Server-derived: whether `GROQ_API_KEY` is set (never expose the key to the client). */
+  liveAnalysisAvailable?: boolean;
 };
 
-export function GapWorkspace({ mode }: Props) {
+export function GapWorkspace({ mode, liveAnalysisAvailable = false }: Props) {
   const [jdText, setJdText] = useState("");
   const [studentTarget, setStudentTarget] = useState("");
   const [studentCurrent, setStudentCurrent] = useState("");
