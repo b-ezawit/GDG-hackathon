@@ -4,6 +4,9 @@ import { z } from "zod";
 
 import { createGroqClient, defaultHotSeatModel } from "@/lib/groq";
 
+
+import { getServerLlmOrNull } from "@/lib/llm-client";
+
 export const runtime = "nodejs";
 
 const bodySchema = z.object({
@@ -43,6 +46,14 @@ export async function POST(request: Request) {
         {
           ok: false,
           error: "GROQ_API_KEY is missing. The Hot Seat requires an active AI engine to grill you.",
+    const llm = getServerLlmOrNull();
+
+    if (!llm) {
+      return NextResponse.json(
+        {
+          ok: false,
+          error:
+            "GROQ_API_KEY or OPENAI_API_KEY is missing. The Hot Seat needs an active LLM key on the server.",
         },
         { status: 401 },
       );
@@ -57,6 +68,12 @@ export async function POST(request: Request) {
 ${persona}
 You are Delta. You conduct a high-stakes oral examination. Your goal is to grill the user only on the weak points discovered during a gap analysis for a ${
       mode === "student" ? "course or exam" : "job role"
+    const { client, hotSeatModel } = llm;
+
+    const systemPrompt = `
+You are AmICooked, a high-stakes AI interrogator. 
+Your goal is to grill the user on their specific weak points discovered during a gap analysis for a ${
+      mode === "student" ? "course/exam" : "job role"
     }.
 
 CONTEXT — weak points you must focus on (do not drift to unrelated topics):
@@ -75,6 +92,14 @@ Start the interrogation immediately on the first turn. On later turns, respond o
 `.trim();
 
     const modelName = defaultHotSeatModel();
+    const response = await client.chat.completions.create({
+      model: hotSeatModel,
+      temperature: 0.7,
+      messages: [
+        { role: "system", content: systemPrompt },
+        ...messages,
+      ],
+    });
 
     const filtered = messages.filter((m) => m.role !== "system");
     type Msg = { role: "user" | "assistant"; content: string };

@@ -6,10 +6,10 @@ import { useCallback, useEffect, useLayoutEffect, useRef, useState } from "react
 
 import { EAGLE_PHOTO_URL } from "@/lib/eagle-assets";
 
-const LETTERS = ["D", "E", "L", "T", "A"] as const;
+const LETTERS = ["C", "O", "O", "K", "E", "D"] as const;
 
 const HOOK =
-  "What if you only discover what's missing after the door closes — exam hall or interview room?";
+  "How cooked are you really — before the exam hall or the interview room decides for you?";
 
 const EAGLE_W = 76;
 const EAGLE_H = 58;
@@ -60,7 +60,10 @@ export function DeltaIntroSequence({ logoAnchorRef, onNest }: Props) {
   const passStarted = useRef(false);
   const passCtrl = useRef<ReturnType<typeof animate> | null>(null);
   const onNestRef = useRef(onNest);
-  onNestRef.current = onNest;
+
+  useEffect(() => {
+    onNestRef.current = onNest;
+  }, [onNest]);
 
   const [trackW, setTrackW] = useState(0);
   const [imgFailed, setImgFailed] = useState(false);
@@ -76,22 +79,26 @@ export function DeltaIntroSequence({ logoAnchorRef, onNest }: Props) {
   const letterLefts =
     trackW > 80
       ? LETTERS.map((_, i) => {
-          const gap = (trackW - 48) / 6;
+          const gap = (trackW - 48) / (LETTERS.length + 1);
           return 16 + i * gap * 1.05;
         })
-      : [20, 88, 156, 224, 292];
+      : LETTERS.map((_, i) => 20 + i * 56);
 
   const hookOpacity = useTransform(x, (v) => {
     const w = Math.max(120, trackWRef.current);
-    const gap = (w - 48) / 6;
-    const lastL = 16 + 4 * gap * 1.05;
+    const gap = (w - 48) / (LETTERS.length + 1);
+    const lastIdx = LETTERS.length - 1;
+    const lastL = 16 + lastIdx * gap * 1.05;
     const start = lastL + 24;
     const end = lastL + 130;
     return clamp01((v - start) / (end - start));
   });
 
   const phaseRef = useRef(phase);
-  phaseRef.current = phase;
+
+  useEffect(() => {
+    phaseRef.current = phase;
+  }, [phase]);
 
   const measureTrack = useCallback(() => {
     const el = trackRef.current;
@@ -220,7 +227,7 @@ export function DeltaIntroSequence({ logoAnchorRef, onNest }: Props) {
     <div className="relative z-[24] mx-auto w-full max-w-2xl px-4 pt-2">
       <div ref={trackRef} className="relative mx-auto h-[5.5rem] w-full max-w-xl overflow-visible sm:h-[6rem]">
         {LETTERS.map((ch, i) => (
-          <Letter key={ch} x={x} lx={letterLefts[i] ?? 0} ch={ch} />
+          <Letter key={`${ch}-${i}`} x={x} lx={letterLefts[i] ?? 0} ch={ch} />
         ))}
 
         {phase === "pass" && (
@@ -244,7 +251,7 @@ export function DeltaIntroSequence({ logoAnchorRef, onNest }: Props) {
                 alt=""
                 width={EAGLE_W}
                 height={EAGLE_H}
-                className="h-[58px] w-[76px] rounded-lg border border-white/15 object-cover shadow-[0_12px_36px_rgba(0,0,0,0.55)] ring-1 ring-white/10 sm:h-[62px] sm:w-[82px]"
+                className="h-[58px] w-[76px] rounded-lg border border-slate-200 object-cover shadow-lg ring-1 ring-slate-200/80 dark:border-white/15 dark:shadow-[0_12px_36px_rgba(0,0,0,0.55)] dark:ring-white/10 sm:h-[62px] sm:w-[82px]"
                 draggable={false}
                 onError={() => setImgFailed(true)}
               />
@@ -254,7 +261,7 @@ export function DeltaIntroSequence({ logoAnchorRef, onNest }: Props) {
       </div>
 
       <motion.p
-        className="mx-auto mt-3 max-w-[22rem] text-center text-[0.8125rem] font-medium leading-snug text-zinc-500 sm:max-w-md sm:text-sm"
+        className="mx-auto mt-3 max-w-[22rem] text-center text-[0.8125rem] font-medium leading-snug text-slate-500 dark:text-zinc-500 sm:max-w-md sm:text-sm"
         style={{ opacity: hookOpacity }}
       >
         {HOOK}
@@ -285,7 +292,7 @@ export function DeltaIntroSequence({ logoAnchorRef, onNest }: Props) {
               alt=""
               width={Math.round(fly.w)}
               height={Math.round(fly.h)}
-              className="h-full w-full rounded-lg border border-white/15 object-cover shadow-2xl ring-1 ring-white/10"
+              className="h-full w-full rounded-lg border border-slate-200 object-cover shadow-2xl ring-1 ring-slate-200/80 dark:border-white/15 dark:ring-white/10"
               draggable={false}
             />
           )}

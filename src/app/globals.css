@@ -1,6 +1,20 @@
 @import "tailwindcss";
 
+/* Class-based dark mode (Tailwind v4): default utilities = light; use dark: for night shell. */
+@custom-variant dark (&:where(.dark, .dark *));
+
 :root {
+  --ds-bg: #f8fafc;
+  --ds-surface: rgba(255, 255, 255, 0.92);
+  --ds-border: rgba(15, 23, 42, 0.08);
+  --ds-muted: #64748b;
+  --ds-text: #0f172a;
+  --ds-cyan: #06b6d4;
+  --ds-violet: #7c3aed;
+  --ds-rose: #e11d48;
+}
+
+.dark {
   --ds-bg: #06050a;
   --ds-surface: rgba(255, 255, 255, 0.04);
   --ds-border: rgba(255, 255, 255, 0.09);
@@ -18,6 +32,10 @@
 }
 
 html {
+  color-scheme: light;
+}
+
+html.dark {
   color-scheme: dark;
 }
 
@@ -28,6 +46,11 @@ body {
 }
 
 ::selection {
+  background: rgba(124, 58, 237, 0.2);
+  color: inherit;
+}
+
+.dark ::selection {
   background: rgba(46, 233, 217, 0.25);
   color: #fff;
 }
@@ -59,13 +82,7 @@ body {
 }
 
 .ds-shimmer-text {
-  background: linear-gradient(
-    90deg,
-    var(--ds-cyan),
-    var(--ds-violet),
-    var(--ds-rose),
-    var(--ds-cyan)
-  );
+  background: linear-gradient(90deg, var(--ds-cyan), var(--ds-violet), var(--ds-rose), var(--ds-cyan));
   background-size: 200% auto;
   -webkit-background-clip: text;
   background-clip: text;
@@ -75,7 +92,13 @@ body {
 
 .ds-grid-bg {
   background-image:
+    linear-gradient(rgba(15, 23, 42, 0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(15, 23, 42, 0.04) 1px, transparent 1px);
+  background-size: 48px 48px;
+}
+
+.dark .ds-grid-bg {
+  background-image:
     linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
     linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
-  background-size: 48px 48px;
 }

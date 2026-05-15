@@ -1,7 +1,9 @@
 import { APIError } from "groq-sdk";
 
-import { buildSystemPrompt, buildUserPrompt } from "@/lib/gap-prompts";
+
 import { createGroqClient, defaultGapModel } from "@/lib/groq";
+import { buildSystemPrompt, buildUserPrompt } from "@/lib/gap-prompts";
+import { getServerLlmOrNull } from "@/lib/llm-client";
 import {
   gapAnalysisPayloadSchema,
   type GapAnalysisResult,
@@ -99,6 +101,9 @@ function buildFallback(mode: GapMode, targetText: string, currentText: string): 
     headline: `Heuristic gap scan (${label}) — set GROQ_API_KEY for full AI analysis.`,
     summary:
       "No Groq API key was configured on the server, so this is a fast lexical overlap estimate. Upload richer PDFs or paste fuller JD text, then add GROQ_API_KEY for calibrated topic extraction and narrative.",
+    headline: `Heuristic gap scan (${label}) — add GROQ_API_KEY or OPENAI_API_KEY for full AI analysis.`,
+    summary:
+      "No LLM key was configured on the server, so this is a fast lexical overlap estimate. Upload richer PDFs or paste fuller JD text, then set GROQ_API_KEY (preferred) or OPENAI_API_KEY for calibrated topic extraction and narrative.",
     targetHighlights: topTarget.slice(0, 5).map(([w]) => `Recurring target theme: ${w}`),
     currentHighlights: [...cf.entries()]
       .sort((a, b) => b[1] - a[1])
@@ -113,7 +118,7 @@ function buildFallback(mode: GapMode, targetText: string, currentText: string): 
     bridges: [
       "Paste or upload a denser current-state document (notes or resume) and re-run.",
       "Ensure the target PDF has selectable text (not only scanned images).",
-      "Add GROQ_API_KEY to enable structured skill/topic mapping via Groq.",
+      "Add GROQ_API_KEY or OPENAI_API_KEY to enable structured skill/topic mapping.",
     ],
     radar,
   };
@@ -240,6 +245,8 @@ export async function runGapAnalysis(
 
   const groq = createGroqClient();
   if (!groq) {
+  const llm = getServerLlmOrNull();
+  if (!llm) {
     const fb = buildFallback(mode, target, current);
     return { ...normalizePayload(mode, fb), model: modelName, usedFallback: true };
   }
@@ -273,6 +280,19 @@ export async function runGapAnalysis(
     const msg = e instanceof Error ? e.message : String(e);
     throw new Error(`Groq gap analysis failed: ${msg}`);
   }
+  const { client, gapModel } = llm;
+  const system = buildSystemPrompt(mode);
+  const user = buildUserPrompt(mode, target, current);
+
+  const completion = await client.chat.completions.create({
+    model: gapModel,
+    temperature: 0.35,
+    response_format: { type: "json_object" },
+    messages: [
+      { role: "system", content: system },
+      { role: "user", content: user },
+    ],
+  });
 
   if (!content?.trim()) throw new Error("Empty model response.");
 
@@ -281,7 +301,7 @@ export async function runGapAnalysis(
   const normalized = normalizePayload(mode, payload);
   return {
     ...normalized,
-    model: modelName,
+    model: completion.model ?? gapModel,
     usedFallback: false,
   };
 }
