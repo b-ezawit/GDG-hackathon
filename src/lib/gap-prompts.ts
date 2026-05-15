@@ -35,12 +35,12 @@ Rules:
 
 export function buildSystemPrompt(mode: GapMode): string {
   if (mode === "student") {
-    return `You are DeltaSense, an academic "reality-gap" analyst for students.
+    return `You are AmICooked, an academic "reality-gap" analyst for students.
 Compare TARGET_STATE (syllabus, exam outline, learning outcomes, weighting by section) to CURRENT_STATE (notes, quizzes, problem sets).
 Extract course topics/modules/skills from the target and estimate how well the current materials cover each.
 ${SHARED_JSON_RULES}`;
   }
-  return `You are DeltaSense, a career "reality-gap" analyst for job seekers.
+  return `You are AmICooked, a career "reality-gap" analyst for job seekers.
 Compare TARGET_STATE (job description: responsibilities, stack, seniority signals) to CURRENT_STATE (resume/CV: skills, experience, impact).
 Extract skills, tools, and domains from the JD and map them to evidence (or absence) in the resume.
 ${SHARED_JSON_RULES}`;

@@ -1,5 +1,5 @@
-import { PDFParse } from "pdf-parse";
 import { NextResponse } from "next/server";
+import pdfParse from "pdf-parse";
 
 export const runtime = "nodejs";
 
@@ -7,15 +7,21 @@ const MAX_BYTES = 12 * 1024 * 1024; // 12 MB — hackathon-friendly cap
 const MAX_EXTRACT_CHARS = 100_000; // server-side cap for gap engine / Phase 2
 const PREVIEW_CHARS = 6000;
 
+function isPdfFile(file: File): boolean {
+  const name = file.name.toLowerCase();
+  if (name.endsWith(".pdf")) return true;
+  const t = file.type.toLowerCase();
+  return t === "application/pdf" || t === "application/x-pdf";
+}
+
 export async function POST(request: Request) {
-  let parser: PDFParse | null = null;
   try {
     const formData = await request.formData();
     const file = formData.get("file");
 
     if (!file || !(file instanceof File)) {
       return NextResponse.json(
-        { ok: false, error: "Missing PDF file under field name \"file\"." },
+        { ok: false, error: 'Missing PDF file under field name "file".' },
         { status: 400 },
       );
     }
@@ -27,17 +33,15 @@ export async function POST(request: Request) {
       );
     }
 
-    const lower = file.name.toLowerCase();
-    if (!lower.endsWith(".pdf")) {
+    if (!isPdfFile(file)) {
       return NextResponse.json(
-        { ok: false, error: "Only PDF uploads are supported in Phase 1." },
+        { ok: false, error: "Only PDF uploads are supported (use a .pdf file or application/pdf)." },
         { status: 400 },
       );
     }
 
     const buffer = Buffer.from(await file.arrayBuffer());
-    parser = new PDFParse({ data: buffer });
-    const parsed = await parser.getText();
+    const parsed = await pdfParse(buffer);
 
     const text = (parsed.text ?? "").replace(/\u0000/g, "").trim();
     const preview = text.slice(0, PREVIEW_CHARS);
@@ -46,7 +50,7 @@ export async function POST(request: Request) {
     return NextResponse.json({
       ok: true,
       fileName: file.name,
-      numPages: parsed.total ?? null,
+      numPages: typeof parsed.numpages === "number" ? parsed.numpages : null,
       charCount: text.length,
       preview,
       truncated: text.length > PREVIEW_CHARS,
@@ -59,13 +63,5 @@ export async function POST(request: Request) {
       { ok: false, error: "Could not read that PDF. Try another file or re-export the PDF." },
       { status: 500 },
     );
-  } finally {
-    if (parser) {
-      try {
-        await parser.destroy();
-      } catch {
-        /* ignore */
-      }
-    }
   }
 }
