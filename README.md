@@ -184,19 +184,6 @@ Stress test yourself against:
 
 ---
 
-# ⚠️ Warning
-
-AmICooked may cause:
-- existential crises
-- sudden productivity
-- panic-driven studying
-- overclocked brain activity
-- emotional damage
-
-Use responsibly.
-
----
-
 # 🏆 Future Plans
 
 - Voice interrogation mode 🎙️
@@ -291,18 +278,3 @@ Find out if you’re cooked.
 
 ---
 
-
-# 🛠️ Tech Stack
-
-Built for speed, pressure, and emotional damage.
-
-| Technology | Purpose |
-|---|---|
-| Next.js | Frontend + Fullstack framework |
-| Framer Motion | Smooth animations & transitions |
-| Groq + Llama 3.3 | AI reasoning and interrogation |
-| Tailwind CSS | Styling |
-| TypeScript | Safer development |
-| Radar Visualizations | Knowledge gap analysis |
-
----
